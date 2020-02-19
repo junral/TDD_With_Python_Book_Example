@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
+from unittest import skip
 
 MAX_WAIT = 10
 
@@ -138,6 +139,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
             delta=10
         )
 
+    @skip
     def test_cannot_add_empty_list_items(self):
         # 伊迪丝访问首页，不小心提交了一个空待办事项
         # 输入框中没有输入内容，她就按下了回车键
