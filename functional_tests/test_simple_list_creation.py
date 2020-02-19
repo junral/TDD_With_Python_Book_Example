@@ -1,36 +1,9 @@
 import os
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from .base import FunctionalTest
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
-import time
-from unittest import skip
 
-MAX_WAIT = 10
-
-class NewVisitorTest(StaticLiveServerTestCase):
-
-    def setUp(self):
-        self.browser = webdriver.Firefox()
-        staging_server = os.environ.get('STAGING_SERVER')
-        if staging_server:
-            self.live_server_url = 'http://' + staging_server
-
-    def tearDown(self):
-        self.browser.quit()
-
-    def wait_for_row_in_list_table(self, row_text):
-        start_time = time.time()
-        while True:
-            try:
-                table = self.browser.find_element_by_id('id_list_table')
-                rows = table.find_elements_by_tag_name('tr')
-                self.assertIn(row_text, [row.text for row in rows])
-                return
-            except (AssertionError, WebDriverException) as e:
-                if time.time() - start_time > MAX_WAIT:
-                    raise e
-                time.sleep(0.5)
+class NewVisitorTest(FunctionalTest):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 伊迪丝听说有一个很酷的在线待办事项应用
@@ -120,38 +93,3 @@ class NewVisitorTest(StaticLiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
-
-    def test_layout_and_styling(self):
-        # 伊迪丝访问首页
-        self.browser.get(self.live_server_url)
-        self.browser.set_window_size(1024, 768)
-
-        # 她看到输入框完美地居中显示
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        # 她新建了一个清单，看到输入框仍完美居中显示
-        inputbox.send_keys('testing')
-        inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: testing')
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertAlmostEqual(
-            inputbox.location['x'] + inputbox.size['width'] / 2,
-            512,
-            delta=10
-        )
-
-    @skip
-    def test_cannot_add_empty_list_items(self):
-        # 伊迪丝访问首页，不小心提交了一个空待办事项
-        # 输入框中没有输入内容，她就按下了回车键
-
-        # 首页刷新了，显示一个错误消息
-        # 提示待办事项不能为空
-
-        # 她输入一些文字，然后再次提交，这次没问题了
-
-        # 她有点调皮，又提交了一个空待办事项
-
-        # 在清单页面她看到了一个类似的错误消息
-
-        # 输入文字之后就没问题了
-        self.fail('write me1')
