@@ -48,7 +48,7 @@ def _update_virutalenv(source_folder):
     if not exists(virtualenv_folder + '/bin/pip'):
         run(f'python3.6 -m venv {virtualenv_folder}')
 
-    run(f'{virtualenv_folder}/bin/pip install -r requirements.txt')
+    run(f'cd {source_folder} && {virtualenv_folder}/bin/pip install -r requirements.txt')
 
 # 更新静态文件
 def _update_static_files(source_folder):
