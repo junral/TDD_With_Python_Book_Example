@@ -13,8 +13,9 @@ class ItemValidationTest(FunctionalTest):
         # 首页刷新了，显示一个错误消息
         # 提示待办事项不能为空
         self.wait_for(lambda :
-            self.assertEqual(self.browser.find_element_by_css_selector('.has-error').text,
-            "You can't have an empty list item"
+            self.assertEqual(
+                self.browser.find_element_by_css_selector('.has-error').text,
+                "You can't have an empty list item"
         ))
 
         # 她输入一些文字，然后再次提交，这次没问题了
