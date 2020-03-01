@@ -57,3 +57,7 @@ class ListAndItemModelTest(TestCase):
         Item.objects.create(list=list1, text='bla')
         item = Item(list=list2, text='bla')
         item.full_clean()   # 不该抛出异常
+
+    def test_string_representation(self):
+        item = Item(text='some text')
+        self.assertEqual(str(item), 'some text')
