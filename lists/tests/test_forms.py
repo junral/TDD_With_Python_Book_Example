@@ -4,7 +4,7 @@ from lists.models import Item, List
 
 class ItemFormTest(TestCase):
 
-    def test_form_renders_item_text_input(self):
+    def test_form_text_input_has_placeholder_and_css_classes(self):
         form = ItemForm()
         self.assertIn('placeholder="Enter a to-do item"', form.as_p())
         self.assertIn('class="form-control input-lg"', form.as_p())
