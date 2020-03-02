@@ -20,7 +20,7 @@ class ItemValidationTest(FunctionalTest):
         # 她在待办事项中输入了一些文字
         # 错误消失了
         self.get_item_input_box().send_keys('Buy milk')
-        self.wait_for(lambda : self.browser.find_element_by_css_selector('#id_text:valid'))
+        self.wait_for(lambda : self.browser.find_elements_by_css_selector('#id_text:valid'))
 
         # 现在能提交了
         self.get_item_input_box().send_keys(Keys.ENTER)
@@ -46,6 +46,7 @@ class ItemValidationTest(FunctionalTest):
         self.browser.get(self.live_server_url)
         self.get_item_input_box().send_keys('Buy wellies')
         self.get_item_input_box().send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy wellies')
 
         # 她一不小心输入了一个重复的待办事项
         self.get_item_input_box().send_keys('Buy wellies')
@@ -53,8 +54,8 @@ class ItemValidationTest(FunctionalTest):
 
         # 她看到一条有帮助的错误消息
         self.wait_for(lambda : self.assertEqual(
-            self.browser.find_element_by_css_selector('.has_error').text,
-            "You've already got this in your lists"
+            self.get_error_element().text,
+            "You've already got this in your list"
         ))
 
     def test_error_messages_are_cleared_on_input(self):
@@ -68,7 +69,7 @@ class ItemValidationTest(FunctionalTest):
         self.get_item_input_box().send_keys(Keys.ENTER)
 
         self.wait_for(lambda : self.assertTrue(
-            self.browser.find_element_by_css_selector('.has-error').is_displayed()
+            self.get_error_element().is_displayed()
         ))
 
         # 为了消除错误，她开始在输入框中输入内容
@@ -76,5 +77,5 @@ class ItemValidationTest(FunctionalTest):
 
         # 看到错误消息消失了，她很高兴
         self.wait_for(lambda : self.assertFalse(
-            self.browser.find_element_by_css_selector('.has-error').is_displayed()
+            self.get_error_element().is_displayed()
         ))
