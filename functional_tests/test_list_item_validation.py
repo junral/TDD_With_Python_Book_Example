@@ -4,6 +4,9 @@ from .base import FunctionalTest
 
 class ItemValidationTest(FunctionalTest):
 
+    def get_error_element(self):
+        return self.browser.find_element_by_css_selector('.has-error')
+
     def test_cannot_add_empty_list_items(self):
         # 伊迪丝访问首页，不小心提交了一个空待办事项
         # 输入框中没有输入内容，她就按下了回车键
