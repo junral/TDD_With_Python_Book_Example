@@ -7,7 +7,7 @@ black==19.10b0
 cffi==1.13.2
 Click==7.0
 colorama==0.4.3
-cryptography==2.8
+cryptography==3.2
 Django==3.0.3
 entrypoints==0.3
 Fabric3==1.14.post1
