@@ -8,7 +8,7 @@ cffi==1.13.2
 Click==7.0
 colorama==0.4.3
 cryptography==2.8
-Django==3.0.3
+Django==3.1.12
 entrypoints==0.3
 Fabric3==1.14.post1
 flake8==3.7.9
